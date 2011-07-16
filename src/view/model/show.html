@@ -4,6 +4,7 @@
 <script src="{{ _base_url }}/static/jquery-1.6.1.min.js"></script>
 <script src="{{ _base_url }}/static/news.js"></script>
 <script>
+    base_url = "{{ _base_url }}";
     var topic_string = "{{ record.id }}.*";
     {% for key, val in record.belongs_to %}
     {% if val %}

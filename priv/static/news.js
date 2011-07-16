@@ -1,6 +1,6 @@
-var watch_id;
+var watch_id, base_url;
 function listen_for_events(timestamp) {
-    $.ajax("/admin/events/"+timestamp, { success: function(data, code, xhr) {
+    $.ajax(base_url+"/model/events/"+timestamp, { success: function(data, code, xhr) {
         if (data.messages) {
             for (var i=0; i<data.messages.length; i++) {
                 var message = data.messages[i];
@@ -24,12 +24,12 @@ function listen_for_events(timestamp) {
     });
 }
 function heartbeat_loop() {
-    $.ajax("/admin/heartbeat/"+watch_id, { type: "POST" });
+    $.ajax(base_url+"/model/heartbeat/"+watch_id, { type: "POST" });
     setTimeout(heartbeat_loop, 30 * 1000);
 }
 
 function watch_topic(topic, timestamp) {
-    $.ajax("/admin/watch", { 
+    $.ajax(base_url+"/model/watch", { 
         type: "POST",
         data: { topic_string: topic },
         success: function(data, code, xhr) {
