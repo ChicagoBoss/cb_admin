@@ -1,4 +1,4 @@
--module(incoming_mail_controller).
+-module(cb_admin_incoming_mail_controller).
 -compile(export_all).
 
 authorize_(User, DomainName, IPAddress) ->

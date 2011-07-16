@@ -1,4 +1,4 @@
-{application, chicagoboss_admin, [
+{application, cb_admin, [
         {description, "Chicago Boss Admin Interface"},
         {vsn, "0.1.0"},
         {modules, []},

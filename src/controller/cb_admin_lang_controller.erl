@@ -1,9 +1,9 @@
--module(lang_controller, [Req, SessionID]).
+-module(cb_admin_lang_controller, [Req, SessionID]).
 -compile(export_all).
 -default_action(show).
 
 before_(_) ->
-    admin_lib:require_ip_address(Req).
+    cb_admin_lib:require_ip_address(Req).
 
 show('GET', [], Auth) ->
     Applications = boss_web:get_all_applications(),
@@ -42,9 +42,9 @@ edit('POST', [App, Lang|Fmt], Auth) ->
                     "" -> 
                         case WithBlanks of
                             undefined -> ok;
-                            _ -> admin_lib:lang_write_to_file(IODevice, Original, Translation, BlockIdentifier)
+                            _ -> cb_admin_lang_lib:lang_write_to_file(IODevice, Original, Translation, BlockIdentifier)
                         end;
-                    _ -> admin_lib:lang_write_to_file(IODevice, Original, Translation, BlockIdentifier)
+                    _ -> cb_admin_lang_lib:lang_write_to_file(IODevice, Original, Translation, BlockIdentifier)
                 end
         end, Req:deep_post_param(["messages"])),
     file:close(IODevice),

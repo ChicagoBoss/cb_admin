@@ -1,9 +1,9 @@
--module(routes_controller, [Req, SessionID]).
+-module(cb_admin_routes_controller, [Req, SessionID]).
 -compile(export_all).
 -default_action(index).
 
 before_(_) ->
-    admin_lib:require_ip_address(Req).
+    cb_admin_lib:require_ip_address(Req).
 
 index('GET', [], Authorization) ->
     {ok, [ {routes_section, true}, {all_routes, boss_web:get_all_routes()} ]}.

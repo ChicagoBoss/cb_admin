@@ -1,4 +1,4 @@
--module(upgrade_controller, [Req, SessionID]).
+-module(cb_admin_upgrade_controller, [Req, SessionID]).
 -compile(export_all).
 -default_action(upgrade).
 

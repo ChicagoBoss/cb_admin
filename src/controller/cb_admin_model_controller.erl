@@ -1,4 +1,4 @@
--module(model_controller, [Req, SessionID]).
+-module(cb_admin_model_controller, [Req, SessionID]).
 -compile(export_all).
 -default_action(model).
 
@@ -10,7 +10,7 @@ heartbeat('POST', [WatchName], Authorization) ->
 
 watch('POST', [], Authorization) ->
     TopicString = Req:post_param("topic_string"),
-    {ok, WatchId} = boss_news:watch(TopicString, fun admin_lib:push_update/3, "admin"++SessionID, 60), 
+    {ok, WatchId} = boss_news:watch(TopicString, fun cb_admin_lib:push_update/3, "admin"++SessionID, 60), 
     {json, [{watch_id, WatchId}]}.
 
 events('GET', [Since], Authorization) ->
@@ -59,9 +59,9 @@ csv('GET', [ModelName], Authorization) ->
     RecordLines = lists:map(fun(Record) ->
                 [lists:foldr(fun
                             ({_Key, Val}, []) ->
-                                [admin_lib:encode_csv_value(Val)];
+                                [cb_admin_model_lib:encode_csv_value(Val)];
                             ({_Key, Val}, Acc) ->
-                                [admin_lib:encode_csv_value(Val), ","|Acc]
+                                [cb_admin_model_lib:encode_csv_value(Val), ","|Acc]
                         end, [], Record:attributes()), "\n"]
         end, Records),
     {output, [FirstLine, RecordLines], [{"Content-Type", "text/csv"}, 
@@ -76,7 +76,7 @@ upload('POST', [ModelName], Authorization) ->
     DummyRecord = boss_record_lib:dummy_record(Module),
     [{uploaded_file, FileName, Location, Length}] = Req:post_files(),
     {ok, FileBytes} = file:read_file(Location),
-    [Head|Rest] = admin_lib:parse_csv(FileBytes),
+    [Head|Rest] = cb_admin_model_lib:parse_csv(FileBytes),
     RecordsToSave = lists:map(fun(Line) ->
                 {_, Record} = lists:foldl(fun(Val, {Counter, Acc}) ->
                             AttrName = lists:nth(Counter, Head),
