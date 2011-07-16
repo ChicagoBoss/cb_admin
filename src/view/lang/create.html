@@ -1,12 +1,12 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}Create a language file{% endblock %}
 
 {% block left_submenu %}
-	{% include "view/shared/_lang_left_submenu.html" with new_language="true" %}
+	{% include "lang/shared/_lang_left_submenu.html" with new_language="true" %}
 {% endblock %}
 
 {% block right_submenu %}
-	{% include "view/shared/_lang_right_submenu.html" %}
+	{% include "lang/shared/_lang_right_submenu.html" %}
 {% endblock %}
 
 {% block meta_scripts %}
@@ -49,6 +49,17 @@
 </script>
 {% endblock %}
 {% block body %}
+{% if applications %}
+<p>Applications: 
+{% for app in applications %}
+{% ifequal app this_application %}
+<strong>{{ app }}</strong>
+{% else %}
+<a href="{% url action="show" app=app %}">{{ app }}</a>
+{% endifequal %}
+{% endfor %}
+</p>
+{% endif %}
 <h1>Create a new language</h1>
 <form method="post" class="tabular">
 	<div class="box">

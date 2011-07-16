@@ -1,4 +1,4 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}General Info{% endblock %}
 
 {% block right_submenu %}
@@ -32,7 +32,7 @@
 {% endfor %}
 </ul>
 
-<p>See the loaded routes <a class="routes" href="{{ _base_url }}/admin/routes">here</a>
+<p>See the loaded routes <a class="routes" href="{% url controller="routes" action="index" %}">here</a>
 
 <h2>Connected nodes</h2>
 <ul>
@@ -44,3 +44,4 @@
 </ul>
 
 {% endblock %}
+

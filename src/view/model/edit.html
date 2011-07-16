@@ -1,8 +1,8 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}Edit {{ record.id }} (Chicago Boss Admin Interface){% endblock %}
 {% block body %}
 <h1>Editing {{ record.id }}</h1>
-<p><em><a href="/admin/record/{{ record.id }}">Back to the {{ record.id }} detail page</a></em></p>
+<p><em><a href="{% url action="show" record_id=record.id %}">Back to the {{ record.id }} detail page</a></em></p>
 {% if errors %}
 <ol>
 {% for error in errors %}
@@ -10,7 +10,7 @@
 {% endfor %}
 </ol>
 {% endif %}
-<form name="edit" action="/admin/edit/{{ record.id }}" method="post">
+<form name="edit" action="{% url action="edit" record_id=record.id %}" method="post">
 <table>
     {% for key, val in record.attributes %}
     {% ifnotequal key "id" %}

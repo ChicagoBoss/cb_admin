@@ -1,8 +1,8 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}Models data management{% endblock %}
 {% block meta_scripts %}
-<script src="/admin/static/jquery-1.6.1.min.js"></script>
-<script src="/admin/static/news.js"></script>
+<script src="{{ _base_url }}/static/jquery-1.6.1.min.js"></script>
+<script src="{{ _base_url }}/static/news.js"></script>
 <script>
     var topic_string = "{{ topic_string }}";
     var timestamp = {{ timestamp }};
@@ -21,7 +21,7 @@
         {% ifequal model this_model %}
         <strong>{{ model }}</strong>
         {% else %}
-        <a href="/admin/model/{{ model }}">{{ model }}</a>
+        <a href="{% url action="model" model_name=model %}">{{ model }}</a>
         {% endifequal %}
         {% if not forloop.last %}
         |
@@ -30,7 +30,7 @@
         </p>
         {% if this_model %}
         <p>
-        <form name="new" action="/admin/create/{{ this_model }}">
+        <form name="new" action="{% url action="create" model=this_model %}">
             <input type="submit" value="+ New {{ this_model }}" />
             &nbsp; &nbsp; See also: <a href="/doc/{{ this_model }}">Documentation for the <code>{{ this_model }}</code> model</a>
         </form>
@@ -46,7 +46,7 @@
             {% endif %}
         {% for record_id, record in records %}
         <tr id="{{ record_id }}">
-            <td><strong><a href="/admin/record/{{ record_id }}">{{ record_id }}</a></strong></td>
+            <td><strong><a href="{% url action="show" record_id=record_id %}">{{ record_id }}</a></strong></td>
             {% for key, val, datatype in record %}
             {% if datatype == "id" %}
             {% else %}
@@ -54,7 +54,7 @@
             <td id="{{ record_id }}-{{ key }}">{{ val|date:"N j, Y, P" }}</td>
             {% else %}
             {% if datatype == "foreign_id" %}
-            <td id="{{ record_id }}-{{ key }}"><a href="/admin/record/{{ val }}">{{ val }}</a></td>
+            <td id="{{ record_id }}-{{ key }}"><a href="{% url action="show" record_id=val %}">{{ val }}</a></td>
             {% else %}
             {% if datatype == "string" or datatype == "binary" %}
             <td id="{{ record_id }}-{{ key }}">{{ val|truncatewords:8 }}</td>
@@ -76,13 +76,14 @@
         {% ifequal page this_page %}
         <strong>{{ page }}</strong>
         {% else %}
-        <a href="/admin/model/{{ this_model }}/{{ page }}">{{ page }}</a>
+        <a href="{% url action="model" model_name=this_model page_name=page %}">{{ page }}</a>
         {% endifequal %}
         {% endfor %}
         </p>
         {% endifnotequal %}
         {% endif %}
         {% if this_model %}
-        <p><a href="/admin/csv/{{ this_model }}">Export as CSV</a> - <a href="/admin/upload/{{ this_model }}">Bulk upload</a></p>
+        <p><a href="{% url action="csv" model=this_model %}">Export as CSV</a> - 
+        <a href="{% url action="upload" model=this_model %}">Bulk upload</a></p>
         {% endif %}
 {% endblock %}

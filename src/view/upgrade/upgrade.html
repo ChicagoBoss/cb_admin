@@ -1,9 +1,9 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}Chicago Boss Hot Code Upgrade{% endblock %}
 
 {% block body %}
 <h1>Chicago Boss Hot Code Upgrade</h1>
-<form method="post" action="{{ _base_url }}/admin/upgrade" class="tabular">
+<form method="post" action="{% url action="upgrade" %}" class="tabular">
 <div class="box">
 	<div id="issue_descr_fields">
 	<p>
@@ -14,7 +14,7 @@
 </div>
 </form>
 
-<form method="post" action="{{ _base_url }}/admin/reread_news_script" class="tabular">
+<form method="post" action="{% url action="reread_news_script" %}" class="tabular">
 <div class="box">
 	<div id="issue_descr_fields">
 	<p>

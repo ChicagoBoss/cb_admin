@@ -1,12 +1,12 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}International Command Center{% endblock %}
 
 {% block left_submenu %}
-	{% include "view/shared/_lang_left_submenu.html" with index="true" %}
+	{% include "lang/shared/_lang_left_submenu.html" with index="true" %}
 {% endblock %}
 
 {% block right_submenu %}
-	{% include "view/shared/_lang_right_submenu.html" %}
+	{% include "lang/shared/_lang_right_submenu.html" %}
 {% endblock %}
 
 {% block meta_scripts %}
@@ -45,6 +45,18 @@
 {% endblock %}
 {% block body %}
 
+{% if applications %}
+<p>Applications: 
+{% for app in applications %}
+{% ifequal app this_application %}
+<strong>{{ app }}</strong>
+{% else %}
+<a href="{% url action="show" app=app %}">{{ app }}</a>
+{% endifequal %}
+{% endfor %}
+</p>
+{% endif %}
+
 <h1>International Command Center</h1>
 
 {% if this_lang %}
@@ -58,8 +70,9 @@
 
 <h2 id="manage_languages">Manage Languages</h2>
 
+{% if this_application %}
 <p>
-<form action="/admin/create_lang">
+<form action="{% url action="create" app=this_application %}">
     <p>
 {% if languages %}
 Your language files:
@@ -67,7 +80,7 @@ Your language files:
 {% ifequal lang this_lang %}
 <strong>{{ lang }}</strong>
 {% else %}
-<a href="/admin/lang/{{ lang }}">{{ lang }}</a>
+<a href="{% url action="show" app=this_application lang=lang %}">{{ lang }}</a>
 {% endifequal %}
 {% endfor %}
 {% endif %}
@@ -165,7 +178,9 @@ Your language files:
 {% if this_lang %}
 <hr>
 <h2 id="actions">Actions</h2>
-<p><a href="/admin/delete_lang/{{ this_lang }}">Delete this language file...</a></p>
+<p><a href="{% url action="delete" app=this_application lang=this_lang %}">Delete this language file...</a></p>
 {% endif %}
+
+{% endif %}{# this_application #}
 
 {% endblock %}

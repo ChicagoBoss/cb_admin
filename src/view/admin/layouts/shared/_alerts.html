@@ -1,8 +1,10 @@
 {% if boss_flash %}
-<div class="flash {{ boss_flash.method }}">
-	{{ boss_flash.title }}
-	{% if boss_flash.message %}
-	<br>{{ boss_flash.message }}
+{% for flash in boss_flash %}
+<div class="flash {{ flash.method }}">
+	{{ flash.title }}
+	{% if flash.message %}
+	<br>{{ flash.message }}
 	{% endif %}
 </div>
+{% endfor %}
 {% endif %}

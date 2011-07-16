@@ -1,14 +1,14 @@
 %% The {Controller, Action} pair to be used on the home page. Defaults to {"hello", "world"}
 %% Format: {"Controller", "Action"}
-{front_page, {"admin", "splash"}}.
+
+{"/", {"admin", "splash"}}.
+
 %%
 %% The action to call if none is specified. Defaults to "index"
 %% Format: "Action" 
-{default_action, "index"}.
 %%
 %% A proplist of default actions to call if none is specified, keyed by controller name
 %% Format: [ {"Controller1", "Action"}, {"Controller2", "Action"}]
-{default_actions, [{"admin", "index"}]}.
 %%
 %% Route for not-found actions, is called if not named route is found a the first url token
 %% don't pertain to a controller

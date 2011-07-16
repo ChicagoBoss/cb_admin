@@ -1,18 +1,18 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}International Command Center: Big Red Button{% endblock %}
 
 {% block left_submenu %}
-	{% include "view/shared/_lang_left_submenu.html" with automatic_translator="true" %}
+	{% include "lang/shared/_lang_left_submenu.html" with automatic_translator="true" %}
 {% endblock %}
 
 {% block right_submenu %}
-	{% include "view/shared/_lang_right_submenu.html" %}
+	{% include "lang/shared/_lang_right_submenu.html" %}
 {% endblock %}
 
 {% block meta_scripts %}
 <script type="text/javascript" src="http://www.google.com/jsapi">
 </script>
-<script type="text/javascript" src="/admin/static/lang.js"></script>
+<script type="text/javascript" src="{{ _base_url }}/static/lang.js"></script>
 <script type="text/javascript">
     var untranslated_messages = {
         {% for lang in languages %}
@@ -38,6 +38,17 @@ google.setOnLoadCallback(initialize);
 {% endblock %}
 
 {% block body %}
+{% if applications %}
+<p>Applications: 
+{% for app in applications %}
+{% ifequal app this_application %}
+<strong>{{ app }}</strong>
+{% else %}
+<a href="{% url action="show" app=app %}">{{ app }}</a>
+{% endifequal %}
+{% endfor %}
+</p>
+{% endif %}
 <p>The Big Red Button fills in all the blanks in your language files with the Google Translate API.</p>
 <div style="text-align: center;">
 <button style="width: 400px; height: 60px; font-size: 18px; background-color: #94060D; color: white;" >PUSH ME</button>

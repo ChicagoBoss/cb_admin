@@ -1,0 +1,7 @@
+{% if this_application %}
+<ul>
+    <li>{% if index %}* {% endif %}<a href="{% url controller="lang" action="show" app=this_application %}">Language list</a></li>
+    <li>{% if automatic_translator %}* {% endif %}<a href="{% url controller="lang" action="big_red_button" app=this_application %}">Automatic Translator</a></li>
+    <li>{% if new_language %}* {% endif %}<a href="{% url controller="lang" action="create" app=this_application %}">New language file</a></li>
+</ul>
+{% endif %}

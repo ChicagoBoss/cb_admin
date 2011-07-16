@@ -1,5 +1,5 @@
 /* load the default Redmine stylesheet */
-@import url(/admin/static/stylesheets/application_orig.css);
+@import url(application_orig.css);
 
 /*                                                      
                                     _/            _/         

@@ -1,9 +1,9 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}Loaded Routes{% endblock %}
 
 {% block left_submenu %}
 <ul>
-	<li><a href="{{ _base_url }}/admin/routes/reload">Reload routes</a></li>
+    <li><a href="{% url action="reload" %}">Reload routes</a></li>
 </ul>
 {% endblock %}
 
@@ -14,9 +14,11 @@
 {% endblock %}
 
 {% block body %}
-<h1>Loaded Routes: file boss.routes</h1>
 
+    {% for appname, routes in all_routes %}
+    <h1>Loaded Routes: file {{ appname }}.routes</h1>
 <table class="list files">
+
 	<thead>
 		<tr>
 			<th>Url/Special</th>
@@ -34,6 +36,7 @@
 			<td class="filename">{{ route.params }}</td>
 		</tr>		
 	{% endfor %}	
+    {% endfor %}
   </tbody>
 </table>
 {% endblock %}

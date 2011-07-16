@@ -1,8 +1,8 @@
-{% extends "view/layouts/admin.html" %}
+{% extends "admin/layouts/admin.html" %}
 {% block title %}{{ record.id }} (Chicago Boss Admin Interface){% endblock %}
 {% block meta_scripts %}
-<script src="/admin/static/jquery-1.6.1.min.js"></script>
-<script src="/admin/static/news.js"></script>
+<script src="{{ _base_url }}/static/jquery-1.6.1.min.js"></script>
+<script src="{{ _base_url }}/static/news.js"></script>
 <script>
     var topic_string = "{{ record.id }}.*";
     {% for key, val in record.belongs_to %}
@@ -19,8 +19,8 @@
 </script>
 {% endblock %}
 {% block body %}
-<h1>Displaying {{ record.id }} (<a href="/admin/edit/{{ record.id }}">edit</a>)</h1>
-<p><em><a href="/admin/model/{{ type }}">Back to the {{ type }} list</a></em></p>
+<h1>Displaying {{ record.id }} (<a href="{% url action="edit" record_id=record.id %}">edit</a>)</h1>
+<p><em><a href="{% url action="model" model_name=type %}">Back to the {{ type }} list</a></em></p>
     {% for key, val, datatype in attributes %}
     {% if not datatype == "id" %}
         <strong>{{ key }}</strong><br />
@@ -49,7 +49,7 @@
     <tr>
         {% for attr_name, attr_val in val.attributes %}
         {% ifequal "id" attr_name %}
-        <td><strong><a href="/admin/record/{{ attr_val }}">{{ attr_val }}</a></strong></td>
+        <td><strong><a href="{% url action="show" record_id=attr_val %}">{{ attr_val }}</a></strong></td>
         {% else %}
         {% if "_time" in attr_name %}
         <td id="{{ val.id }}-{{ attr_name }}">{{ attr_val|date:"N j, Y, P" }}</td>
@@ -62,7 +62,7 @@
     </table><br /><br />
     {% endif %}
     {% endfor %} 
-    <form name="delete" action="/admin/delete/{{ record.id }}">
+    <form name="delete" action="{% url action="delete" record_id=record.id %}">
         <input type="submit" value="Delete {{ record.id }}?" />
     </form>
 {% endblock %}
