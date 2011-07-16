@@ -27,14 +27,15 @@ require_ip_address(Req) ->
                     [IPAddress, Mask] ->
                         MaskInt = list_to_integer(Mask),
                         IPAddressTuple = list_to_tuple(lists:map(fun erlang:list_to_integer/1, string:tokens(IPAddress, "."))),
-                        admin_lib:mask_ipv4_address(ClientIp, MaskInt) =:= admin_lib:mask_ipv4_address(IPAddressTuple, MaskInt)
+                        mask_ipv4_address(ClientIp, MaskInt) =:= mask_ipv4_address(IPAddressTuple, MaskInt)
                 end;
             (_, true) ->
                 true
-        end, false, boss_env:get_env(admin_ip_blocks, ["192.168.0.0/16", "127.0.0.1", "10.0.0.0/16"])),
+        end, false, boss_env:get_env(cb_admin, allow_ip_blocks, 
+            ["192.168.0.0/16", "127.0.0.1", "10.0.0.0/16"])),
     case Authorized of
         true ->
             {ok, local};
         _ ->
-            {redirect, [{controller, "admin"}, {action, "access_denied"}]}
+            {redirect, [{controller, "index"}, {action, "access_denied"}]}
     end.
