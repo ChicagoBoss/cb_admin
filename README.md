@@ -6,7 +6,9 @@ This is the admin interface for Chicago Boss, which can be configured as a stand
 Installation as a standalone server
 -----------------------------------
 
-This isn't very useful, but it's easy. Just type:
+This isn't very useful, but it's easy. First make sure ChicagoBoss is built in the parent directory; otherwise modify start.sh and start-dev.sh to point to the ChicagoBoss ebin/ directory on your machine.
+
+Then:
 
     make
     ./start.sh
