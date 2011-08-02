@@ -2,7 +2,7 @@ ERL=erl
 APP=cb_admin
 
 all:
-	$(ERL) -pa /Users/emiller/src/ChicagoBoss/ebin -eval 'boss_load:load_all_modules_and_emit_app_file($(APP), "ebin")' -s init stop -noshell
+	$(ERL) -pa ebin/ -pa ../ChicagoBoss/ebin -eval 'boss_load:load_all_modules_and_emit_app_file($(APP), "ebin")' -s init stop -noshell
 
 clean:
 	rm -fv ebin/*.beam
