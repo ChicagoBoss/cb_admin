@@ -13,4 +13,4 @@ update_po:
 
 .PHONY: test
 test:
-	$(ERL) -pa /Users/emiller/src/ChicagoBoss/ebin -run boss_web_test -noshell
+	$(ERL) -pa ../ChicagoBoss/ebin -run boss_web_test -noshell

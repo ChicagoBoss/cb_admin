@@ -10,6 +10,7 @@ This isn't very useful, but it's easy. First make sure ChicagoBoss is built in t
 
 Then:
 
+    mkdir log
     make
     ./start.sh
 
