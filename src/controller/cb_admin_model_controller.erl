@@ -134,7 +134,7 @@ delete('POST', [RecordId], Authorization) ->
     {redirect, [{action, "model"}, {model_name, atom_to_list(Type)}]}.
 
 create(Method, [RecordType], Authorization) ->
-    case lists:member(RecordType, lists:map(fun atom_to_list/1, boss_web:get_all_models())) of
+    case lists:member(RecordType, boss_web:get_all_models()) of
         true ->
             Module = list_to_atom(RecordType),
             DummyRecord = boss_record_lib:dummy_record(Module),

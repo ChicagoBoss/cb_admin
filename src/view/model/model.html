@@ -31,7 +31,7 @@
         </p>
         {% if this_model %}
         <p>
-        <form name="new" action="{% url action="create" model=this_model %}">
+        <form name="new" action="{% url action="create" record_type=this_model %}">
             <input type="submit" value="+ New {{ this_model }}" />
             &nbsp; &nbsp; See also: <a href="/doc/{{ this_model }}">Documentation for the <code>{{ this_model }}</code> model</a>
         </form>
@@ -84,7 +84,7 @@
         {% endifnotequal %}
         {% endif %}
         {% if this_model %}
-        <p><a href="{% url action="csv" model=this_model %}">Export as CSV</a> - 
-        <a href="{% url action="upload" model=this_model %}">Bulk upload</a></p>
+        <p><a href="{% url action="csv" model_name=this_model %}">Export as CSV</a> - 
+        <a href="{% url action="upload" model_name=this_model %}">Bulk upload</a></p>
         {% endif %}
 {% endblock %}
