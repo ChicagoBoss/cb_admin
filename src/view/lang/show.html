@@ -98,7 +98,7 @@ Your language files:
 
 {% if untranslated_messages %}
 <p><em>{{ untranslated_messages|length }} untranslated messages:</em> (<a href="#" onclick="javascript:startTranslations()">Fill in the blanks with Google!</a> <span style="font-size: 11px; font-family: Courier New; font-weight: bold;">EXPERIMENTAL FEATURE</span>)</p>
-<form method="post">
+<form method="post"  action="{% url action="edit" app=this_application lang=this_lang %}">
 <table class="list files">
     <thead>
         <tr><th>Original/Translation</th></tr>
