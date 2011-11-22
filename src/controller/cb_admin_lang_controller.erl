@@ -48,7 +48,8 @@ edit('POST', [App, Lang|Fmt], Auth) ->
                 end
         end, Req:deep_post_param(["messages"])),
     file:close(IODevice),
-    boss_translator:reload(Lang),
+    Trans_pid=boss_web:translator_pid(AppAtom),
+    boss_translator:reload(Trans_pid,Lang),
     case Fmt of
         ["json"] -> {json, [{success, true}]};
         [] -> {redirect, [{action, "show"}, {app, App}, {lang, Lang}]}
