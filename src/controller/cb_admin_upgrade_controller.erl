@@ -10,12 +10,12 @@ upgrade('POST', [], Auth) ->
     error_logger:info_msg("Reloading routes...~n"),
     boss_web:reload_routes(),
     error_logger:info_msg("Reloading translation...~n"),
-    boss_web:reload_translations(),
+    boss_web:reload_all_translations(),
     lists:map(fun(Node) ->
                 error_logger:info_msg("Reloading on ~p~n", [Node]),
                 rpc:call(Node, boss_load, reload_all, []),
                 rpc:call(Node, boss_web, reload_routes, []),
-                rpc:call(Node, boss_web, reload_translations, [])
+                rpc:call(Node, boss_web, reload_all_translations, [])
         end, erlang:nodes()),
     {redirect, [{action, "upgrade"}]}.
 

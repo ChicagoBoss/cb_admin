@@ -74,6 +74,7 @@ delete('GET', [App, Lang], Auth) ->
 delete('POST', [App, Lang], Auth) ->
     AppAtom = list_to_atom(App),
     boss_lang:delete_lang(AppAtom, Lang),
+    boss_web:reload_translation(Lang),
     {redirect, [{action, "show"}]}.
 
 big_red_button('GET', [App], Auth) ->
