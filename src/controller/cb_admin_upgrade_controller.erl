@@ -19,7 +19,7 @@ upgrade('POST', [], Auth) ->
         end, erlang:nodes()),
     {redirect, [{action, "upgrade"}]}.
 
-reread_news_script('POST', [], Auth) ->
-    boss_web:reload_news(),
+reread_init_scripts('POST', [], Auth) ->
+    boss_web:reload_init_scripts(),
     {redirect, [{action, "upgrade"}]}.
 
