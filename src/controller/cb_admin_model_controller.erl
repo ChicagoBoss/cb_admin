@@ -81,7 +81,7 @@ upload('POST', [ModelName], Authorization) ->
                 {_, Record} = lists:foldl(fun(Val, {Counter, Acc}) ->
                             AttrName = lists:nth(Counter, Head),
                             Attr = list_to_atom(AttrName),
-                            {Counter + 1, Acc:Attr(Val)}
+                            {Counter + 1, Acc:set(Attr, Val)}
                     end, {1, DummyRecord}, Line),
                 Record
         end, Rest),
@@ -113,10 +113,10 @@ edit('POST', [RecordId], Authorization) ->
                 Val = Req:post_param(AttrName),
                 case lists:suffix("_time", AttrName) of
                     true ->
-                        case Val of "now" -> Acc:Attr(erlang:now());
+                        case Val of "now" -> Acc:set(Attr, erlang:now());
                             _ -> Acc
                         end;
-                    false -> Acc:Attr(Val)
+                    false -> Acc:set(Attr, Val)
                 end
         end, Record, Record:attribute_names()),
     case NewRecord:save() of
@@ -143,7 +143,7 @@ create(Method, [RecordType], Authorization) ->
                     {ok, [{type, RecordType}, {'record', DummyRecord}]};
                 'POST' ->
                     Record = lists:foldr(fun
-                                ('id', Acc) -> Acc:id('id');
+                                ('id', Acc) -> Acc:set(id, 'id');
                                 (Attr, Acc) ->
                                     AttrName = atom_to_list(Attr),
                                     Val = Req:post_param(AttrName),
@@ -155,7 +155,7 @@ create(Method, [RecordType], Authorization) ->
                                             end;
                                         _ -> Val
                                     end,
-                                    Acc:Attr(Val1)
+                                    Acc:set(Attr, Val1)
                             end, DummyRecord, DummyRecord:attribute_names()),
                     case Record:save() of
                         {ok, SavedRecord} ->
