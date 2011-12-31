@@ -22,6 +22,7 @@
 	<thead>
 		<tr>
 			<th>Url/Special</th>
+			<th>Application</th>
 			<th>Controller</th>
 			<th>Action</th>
 			<th>Params</th>
@@ -31,12 +32,14 @@
 	{% for route in routes %}
 		<tr class="{% cycle 'odd' 'even' %}">
 			<td class="filename">{{ route.url }}</td>
+			<td class="filename">{{ route.application }}</td>
 			<td class="filename">{{ route.controller }}</td>
 			<td class="filename">{{ route.action }}</td>
 			<td class="filename">{{ route.params }}</td>
 		</tr>		
 	{% endfor %}	
-    {% endfor %}
+
   </tbody>
 </table>
+    {% endfor %}
 {% endblock %}
