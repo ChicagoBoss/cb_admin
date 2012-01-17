@@ -37,5 +37,5 @@ require_ip_address(Req) ->
         true ->
             {ok, local};
         _ ->
-            {redirect, [{controller, "index"}, {action, "access_denied"}]}
+            {redirect, [{controller, "admin"}, {action, "access_denied"}]}
     end.
