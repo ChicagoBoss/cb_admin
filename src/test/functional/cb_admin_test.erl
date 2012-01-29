@@ -1,8 +1,8 @@
--module(admin_test).
+-module(cb_admin_test).
 -compile(export_all).
 
 start() ->
-  boss_web_test:get_request("/hello/world", [],
+  boss_web_test:get_request("/admin", [],
     [ fun boss_assert:http_ok/1,
       fun(Res) -> boss_assert:link_with_text("\"An Evening With Chicago Boss\"", Res) end,
       fun(Res) -> boss_assert:link_with_text("chicagoboss.org", Res) end,
