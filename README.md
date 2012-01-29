@@ -6,20 +6,19 @@ This is the admin interface for Chicago Boss, which can be configured as a stand
 Installation as a standalone server
 -----------------------------------
 
-This isn't very useful, but it's easy. First make sure ChicagoBoss is built in the parent directory; otherwise modify start.sh and start-dev.sh to point to the ChicagoBoss ebin/ directory on your machine.
+Check your boss.config and make sure that the path's are correct (defaults to ../ChicagoBoss and ../chicagoboss_admin).
 
 Then:
 
-    mkdir log
-    make
-    ./start.sh
+    ./rebar compile
+    ./init.sh start
 
 Then visit http://localhost:8001/
 
 Installation with an existing CB server
 ---------------------------------------
 
-First "make" and add the ebin/ directory to the path of your CB startup scripts (start.sh and start-dev.sh).
+First "./rebar compile" and add the app config section to the boss.config of your existing CB server.
 
 Add something like this to your boss.config:
 
@@ -28,6 +27,7 @@ Add something like this to your boss.config:
         ...
     ]},
     {cb_admin, [
+        {path, "../chicagoboss_admin"},
         {allow_ip_blocks, ["127.0.0.1"]},
         {base_url, "/admin"}
     ]}].
