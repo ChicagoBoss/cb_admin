@@ -1,4 +1,4 @@
-chicagoboss_admin
+ch_admin
 =================
 
 This is the admin interface for Chicago Boss, which can be configured as a standalone application with CB 0.6 or later.
@@ -6,7 +6,7 @@ This is the admin interface for Chicago Boss, which can be configured as a stand
 Installation as a standalone server
 -----------------------------------
 
-Check your boss.config and make sure that the path's are correct (defaults to ../ChicagoBoss and ../chicagoboss_admin).
+Check your boss.config and make sure that the path's are correct, defaults to ../ChicagoBoss (framework) and ../cb_admin (the checkout dir).
 
 Then:
 
@@ -27,7 +27,7 @@ Add something like this to your boss.config:
         ...
     ]},
     {cb_admin, [
-        {path, "../chicagoboss_admin"},
+        {path, "../cb_admin"},
         {allow_ip_blocks, ["127.0.0.1"]},
         {base_url, "/admin"}
     ]}].
