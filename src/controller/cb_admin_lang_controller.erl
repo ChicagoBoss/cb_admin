@@ -37,14 +37,13 @@ edit('POST', [App, Lang|Fmt], Auth) ->
     lists:map(fun(Message) ->
                 Original = proplists:get_value("orig", Message),
                 Translation = proplists:get_value("trans", Message),
-                BlockIdentifier = proplists:get_value("identifier", Message),
                 case Translation of
                     "" -> 
                         case WithBlanks of
                             undefined -> ok;
-                            _ -> cb_admin_lang_lib:lang_write_to_file(IODevice, Original, Translation, BlockIdentifier)
+                            _ -> boss_lang:lang_write_to_file(IODevice, Original, Translation)
                         end;
-                    _ -> cb_admin_lang_lib:lang_write_to_file(IODevice, Original, Translation, BlockIdentifier)
+                    _ -> boss_lang:lang_write_to_file(IODevice, Original, Translation)
                 end
         end, Req:deep_post_param(["messages"])),
     file:close(IODevice),
