@@ -111,7 +111,7 @@ Your language files:
         			<input type="text" style="width: 100%;" value='{{ message }}' readonly="readonly">
         		</span>
                 <input type="hidden" name="messages[{{ forloop.counter0 }}][orig]" value="{{ message|escape }}" />
-            	<textarea id="trans_message{{ forloop.counter0 }}" style="width: 100%;" name="messages[{{ forloop.counter0 }}][trans]" size="60" />
+            	<textarea id="trans_message{{ forloop.counter0 }}" style="width: 100%;" name="messages[{{ forloop.counter0 }}][trans]" size="60"></textarea>
         	</td>
         </tr>
         {% endfor %}
