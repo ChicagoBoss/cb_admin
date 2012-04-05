@@ -8,7 +8,7 @@ Installation as a standalone server
 
 Check your boss.config and make sure that the path's are correct, defaults to ../ChicagoBoss (framework) and ../cb_admin (the checkout dir).
 
-Then:
+Then in *nix:
 
     ./rebar compile
     ./init.sh start
@@ -18,12 +18,12 @@ In Windows:
 	rebar compile
 	start-server.bat
 
-Then visit http://localhost:8001/
+Then visit http://localhost:8001/admin
 
 Installation with an existing CB server
 ---------------------------------------
 
-First "./rebar compile" or "rebar compile" in Windows, and add the app config section to the boss.config of your existing CB server.
+First "./rebar compile" in *nix or "rebar compile" in Windows, and add the app config section to the boss.config of your existing CB server.
 
 Add something like this to your boss.config:
 
