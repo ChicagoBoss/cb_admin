@@ -13,12 +13,17 @@ Then:
     ./rebar compile
     ./init.sh start
 
+In Windows:
+	
+	rebar compile
+	start-server.bat
+
 Then visit http://localhost:8001/
 
 Installation with an existing CB server
 ---------------------------------------
 
-First "./rebar compile" and add the app config section to the boss.config of your existing CB server.
+First "./rebar compile" or "rebar compile" in Windows, and add the app config section to the boss.config of your existing CB server.
 
 Add something like this to your boss.config:
 
