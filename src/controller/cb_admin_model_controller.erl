@@ -4,6 +4,9 @@
 
 -define(RECORDS_PER_PAGE, 100).
 
+before_(_) ->
+    cb_admin_lib:require_ip_address(Req).
+
 heartbeat('POST', [WatchName], Authorization) ->
     boss_news:extend_watch(list_to_integer(WatchName)),
     {output, ""}.
