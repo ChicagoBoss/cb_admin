@@ -16,7 +16,8 @@ mask_ipv4_address({I1, I2, I3, I4}, MaskInt) ->
 require_ip_address(Req) ->
     ClientIp = case Req:header(x_forwarded_for) of
         undefined -> Req:peer_ip();
-        IP -> IP
+        IP when is_tuple(IP)-> IP;
+        IP when is_list(IP) -> list_to_tuple(lists:map(fun erlang:list_to_integer/1, string:tokens(IP, ".")))
     end,
     Authorized = lists:foldr(fun
             (IPBlock, false) ->
