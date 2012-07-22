@@ -31,7 +31,8 @@ model('GET', [ModelName, PageName], Authorization) ->
     Page = list_to_integer(PageName),
     Model = list_to_atom(ModelName),
     RecordCount = boss_db:count(Model),
-    Records = boss_db:find(Model, [], ?RECORDS_PER_PAGE, (Page - 1) * ?RECORDS_PER_PAGE, id, str_descending),
+    Records = boss_db:find(Model, [], [{limit, ?RECORDS_PER_PAGE}, 
+            {offset, (Page - 1) * ?RECORDS_PER_PAGE}, descending]),
     TopicString = string:join(lists:map(fun(Record) -> Record:id() ++ ".*" end, Records), ", "),
     AttributesWithDataTypes = lists:map(fun(Record) ->
                 {Record:id(), lists:map(fun({Key, Val}) ->
@@ -52,7 +53,7 @@ model('GET', [ModelName, PageName], Authorization) ->
 
 csv('GET', [ModelName], Authorization) ->
     Model = list_to_atom(ModelName),
-    [First|_] = Records = boss_db:find(Model, [], all, 0, id, str_descending),
+    [First|_] = Records = boss_db:find(Model, [], [descending]),
     FirstLine = [lists:foldr(fun
                 (Attr, []) ->
                     [atom_to_list(Attr)];
