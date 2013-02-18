@@ -24,7 +24,8 @@ events('GET', [Since], Authorization) ->
 model('GET', [], Authorization) ->
     {ok, [{model_section, true}, {records, []}, 
             {models, boss_web:get_all_models()}, 
-            {this_model, ""}, {topic_string, ""}]};
+            {this_model, ""}, {topic_string, ""},
+            {timestamp, now()}]};
 model('GET', [ModelName], Authorization) ->
     model('GET', [ModelName, "1"], Authorization);
 model('GET', [ModelName, PageName], Authorization) ->
