@@ -27,7 +27,7 @@
             var span_id = span.id;
             var textbox = document.getElementById("trans_"+span_id);
             if (textbox && textbox.value == "" && span.firstChild.value != undefined) {
-                google.language.translate(span.firstChild.value, "{{ original_lang }}", "{{ this_lang }}", function(result) {
+                google.language.translate(span.firstChild.value, "{{ original_lang|default_if_none:"" }}", "{{ this_lang|default_if_none:"" }}", function(result) {
                         if (!result.error) {
                             if (result.translation) {
                                 textbox.value = result.translation;
