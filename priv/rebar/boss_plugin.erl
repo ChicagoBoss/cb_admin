@@ -26,9 +26,9 @@
 %% @end
 %%--------------------------------------------------------------------
 boss(RebarConf, AppFile) ->
-	case is_base_dir() of
+	case is_base_dir(RebarConf) of
 		true -> 
-            Command = rebar_config:get_global(c, "help"),
+            Command = rebar_config:get_global(RebarConf, c, "help"),
 			{ok, BossConf} = init(RebarConf, AppFile, Command),
 			case boss_rebar:run(?BOSS_PLUGIN_CLIENT_VERSION, Command, RebarConf, BossConf, AppFile) of
 				{error, command_not_found} ->
@@ -49,7 +49,7 @@ boss(RebarConf, AppFile) ->
 %%       Set's the ebin cb_apps and loads the connector 
 %% @end
 %%--------------------------------------------------------------------
-init(_RebarConf, AppFile, Command) ->
+init(RebarConf, AppFile, Command) ->
     %% Compile and load the boss_rebar code, this can't be compiled
 	%% as a normal boss lib without the rebar source dep
 	%% The load of ./rebar boss:
@@ -83,9 +83,14 @@ init(_RebarConf, AppFile, Command) ->
 	%% add all cb_apps defined in config file to code path
 	%% including the deps ebin dirs
 	[code:add_path(CodePath) || CodePath <- boss_rebar:all_ebin_dirs(BossConf, AppFile)],
-    
-    %% Load the config in the environment
-    boss_rebar:init_conf(BossConf),
+  case is_base_dir(RebarConf) of
+  true ->
+    ok;
+  false ->
+    code:add_paths(filelib:wildcard(rebar_utils:get_cwd() ++ "/../*/ebin"))
+  end,
+  %% Load the config in the environment
+  boss_rebar:init_conf(BossConf),
 	
 	{ok, BossConf}.
 	
@@ -99,7 +104,7 @@ init(_RebarConf, AppFile, Command) ->
 %% @end
 %%--------------------------------------------------------------------
 pre_compile(RebarConf, AppFile) ->
-	case is_base_dir() of
+	case is_boss_app(AppFile)  orelse is_base_dir(RebarConf) of
 		true -> 
 			{ok, BossConf} = init(RebarConf, AppFile, "compile"),
 			boss_rebar:run(?BOSS_PLUGIN_CLIENT_VERSION, compile, RebarConf, BossConf, AppFile),
@@ -117,7 +122,7 @@ pre_compile(RebarConf, AppFile) ->
 %% @end
 %%--------------------------------------------------------------------
 pre_eunit(RebarConf, AppFile) ->
-	case is_base_dir() of
+	case is_boss_app(AppFile) orelse is_base_dir(RebarConf) of
 		true -> 
 			{ok, BossConf} = init(RebarConf, AppFile, "test_eunit"),
 			boss_rebar:run(?BOSS_PLUGIN_CLIENT_VERSION, test_eunit, RebarConf, BossConf, AppFile),
@@ -129,10 +134,14 @@ pre_eunit(RebarConf, AppFile) ->
 %% Internal functions
 %% ===================================================================
 
+is_boss_app(Filename)->
+  BossFileForApp = filename:join([filename:dirname(Filename), "..", "boss.config"]),
+  filelib:is_file(BossFileForApp).
+
 %% Checks if the current dir (rebar execution) is the base_dir
 %% Used to prevent run boss tasks in deps directory
-is_base_dir() ->
-    filename:absname(rebar_utils:get_cwd()) =:= rebar_config:get_global(base_dir, undefined).
+is_base_dir(RebarConf) ->
+    filename:absname(rebar_utils:get_cwd()) =:= rebar_config:get_xconf(RebarConf, base_dir, undefined).
 
 %% Gets the boss.config central configuration file
 boss_config(Command) ->
@@ -140,7 +149,10 @@ boss_config(Command) ->
         false ->
             ?BOSS_CONFIG_FILE;
         true ->
-            ?BOSS_TEST_CONFIG_FILE
+            case file:read_file_info(?BOSS_TEST_CONFIG_FILE) of
+                {ok, _} -> ?BOSS_TEST_CONFIG_FILE;
+                _ -> ?BOSS_CONFIG_FILE
+            end
     end,
     case file:consult(BossConfFile) of
         {error,enoent} ->
