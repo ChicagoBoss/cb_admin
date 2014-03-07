@@ -27,7 +27,7 @@ Add to rebar.config
 ```erlang
 {deps, [
   % ...
-  {cb_admin, ".*", {git, "git://github.com/evanmiller/cb_admin.git", "HEAD"}}
+  {cb_admin, ".*", {git, "git://github.com/ChicagoBoss/cb_admin.git", "HEAD"}}
 ]}.
 ```
 
