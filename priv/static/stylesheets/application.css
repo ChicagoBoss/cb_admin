@@ -213,7 +213,9 @@ table.list thead th {
 table.list th a { font-weight:normal; color:#555;  }
 /* Issues grid styles by priorities (provided by Wynn Netherland) */
 table.list tr.issue a { color: #3c3c3c; }
-
+table {
+    word-break: break-all;
+}
 
 p.breadcrumb {
 	background-color:#EEEEEE;
