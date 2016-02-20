@@ -1,6 +1,6 @@
 {application, cb_admin, [
         {description, "Chicago Boss Admin Interface"},
-        {vsn, "0.7.1"},
+        {vsn, "0.7.2"},
         {modules, []},
         {registered, []},
         {applications, [kernel, stdlib, crypto, boss]},
