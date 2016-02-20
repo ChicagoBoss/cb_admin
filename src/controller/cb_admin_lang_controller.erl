@@ -19,7 +19,7 @@ show('GET', [App, Lang], Auth) ->
     Applications = boss_web:get_all_applications(),
     Languages = boss_files:language_list(AppAtom),
     {Untranslated, Translated} = boss_lang:extract_strings(AppAtom, Lang),
-    LastModified = filelib:last_modified(boss_files:lang_path(AppAtom, Lang)),
+    LastModified = filelib:last_modified(boss_files_util:lang_path(AppAtom, Lang)),
     {ok, [{this_lang, Lang}, {languages, Languages},
             {this_application, App}, {applications, Applications},
             {original_lang, OriginalLang},
@@ -32,7 +32,7 @@ show('GET', [App, Lang], Auth) ->
 edit('POST', [App, Lang|Fmt], Auth) ->
     WithBlanks = Req:post_param("trans_all_with_blanks"),
     AppAtom = list_to_atom(App),
-    LangFile = boss_files:lang_path(AppAtom, Lang),
+    LangFile = boss_files_util:lang_path(AppAtom, Lang),
     {ok, IODevice} = file:open(LangFile, [write, append]),
     lists:map(fun(Message) ->
                 Original = proplists:get_value("orig", Message),
